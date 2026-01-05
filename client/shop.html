@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop - Back Creek</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">BACK CREEK</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="cart.html" class="cart-icon">
+            🛒
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Shop Section -->
+  <section class="container">
+    <h2>Shop All Products</h2>
+    
+    <!-- Category Filter -->
+    <div class="categories" id="categoryFilter">
+      <button class="category-btn active" data-category="all" onclick="filterByCategory('all')">All Products</button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="product-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Back Creek. All rights reserved.</p>
+    <p>
+      <a href="shop.html">Shop</a> | 
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/shop.js"></script>
+</body>
+</html>

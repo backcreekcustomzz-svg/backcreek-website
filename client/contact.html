@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Back Creek</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">BACK CREEK</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="cart.html" class="cart-icon">
+            🛒
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <section class="container">
+    <h2>Contact Us</h2>
+    <p style="text-align: center; color: var(--light-gray); max-width: 700px; margin: 0 auto 3rem;">
+      Have questions about our products or need assistance with an order? 
+      We're here to help. Send us a message and we'll respond within 24 hours.
+    </p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+      <!-- Contact Form -->
+      <div style="background-color: var(--charcoal); padding: 2.5rem; border-radius: 8px;">
+        <h3>Send us a Message</h3>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+
+          <div id="formMessage"></div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div>
+        <div style="background-color: var(--charcoal); padding: 2.5rem; border-radius: 8px; margin-bottom: 2rem;">
+          <h3>Contact Information</h3>
+          <div style="margin-top: 1.5rem; line-height: 2;">
+            <p><strong style="color: var(--tan);">Email:</strong><br>
+            <a href="mailto:backcreekcustomzz@backcreekcustomzz.com" style="color: var(--light-gray); text-decoration: none;">backcreekcustomzz@backcreekcustomzz.com</a></p>
+            
+            <p style="margin-top: 1rem;"><strong style="color: var(--tan);">Phone:</strong><br>
+            <a href="sms:+18392283731" style="color: var(--light-gray); text-decoration: none;">(839) 228-3731</a></p>
+            
+          </div>
+        </div>
+
+        <div style="background-color: var(--charcoal); padding: 2.5rem; border-radius: 8px;">
+          <h3>Frequently Asked Questions</h3>
+          <div style="margin-top: 1.5rem; color: var(--light-gray); line-height: 1.8;">
+            <p><strong style="color: var(--tan);">What is your return policy?</strong><br>
+            We offer 30-day returns on all non-custom items in original condition.</p>
+            
+            <p style="margin-top: 1rem;"><strong style="color: var(--tan);">How long does shipping take?</strong><br>
+            Standard shipping takes 5-7 business days. Expedited options available at checkout.</p>
+            
+            <p style="margin-top: 1rem;"><strong style="color: var(--tan);">Do you ship internationally?</strong><br>
+            Currently we only ship within the United States.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Back Creek. All rights reserved.</p>
+    <p>
+      <a href="/shop.html">Shop</a> | 
+      <a href="/custom.html">Custom Orders</a> | 
+      <a href="/contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <script src="/js/cart.js"></script>
+  <script>
+    updateCartCount();
+
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      const messageDiv = document.getElementById('formMessage');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      messageDiv.innerHTML = '';
+      
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to send message');
+        }
+        
+        const result = await response.json();
+        
+        messageDiv.innerHTML = '<div class="message success">✓ ' + result.message + '</div>';
+        e.target.reset();
+        
+        setTimeout(() => {
+          messageDiv.innerHTML = '';
+        }, 5000);
+      } catch (error) {
+        console.error('Error sending message:', error);
+        messageDiv.innerHTML = '<div class="message error">Failed to send message. Please try again or email us directly.</div>';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      }
+    });
+  </script>
+
+  <style>
+    @media (max-width: 768px) {
+      div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</body>
+</html>

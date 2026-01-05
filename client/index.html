@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Back Creek - Premium Outdoor & Marine Accessories</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">BACK CREEK</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="cart.html" class="cart-icon">
+            🛒
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>BACK CREEK</h1>
+    <p>Premium Outdoor & Marine Accessories</p>
+    <div class="hero-buttons">
+      <a href="shop.html" class="btn btn-primary">Shop Now</a>
+      <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="container">
+    <h2>Featured Products</h2>
+    <div class="product-grid" id="featuredProducts"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Back Creek. All rights reserved.</p>
+    <p>
+      <a href="shop.html">Shop</a> | 
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    updateCartCount();
+    
+    const featured = products.filter(p => p.featured);
+    document.getElementById('featuredProducts').innerHTML = featured.map(product => `
+      <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
+        <div class="product-image">📦</div>
+        <div class="product-info">
+          <div class="product-category">${product.category}</div>
+          <div class="product-name">${product.name}</div>
+          <div class="product-description">${product.description.substring(0, 100)}...</div>
+          <div class="product-price">$${product.price.toFixed(2)}</div>
+        </div>
+      </div>
+    `).join('');
+  </script>
+</body>
+</html>
